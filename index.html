@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bulk Quiz</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    body {
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Optional dark overlay for readability */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 3.5rem;
+      margin: 0;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-top: 10px;
+      margin-bottom: 40px;
+      color: #ccc;
+      animation: fadeIn 1.8s ease-in-out;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      border: 2px solid #fff;
+      border-radius: 15px;
+      padding: 30px;
+      width: 90%;
+      max-width: 600px;
+      display: none;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    /* ===== BUTTON STYLES ===== */
+    .choices button,
+    .controls button,
+    #start-btn {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    .choices button:hover,
+    .controls button:hover,
+    #start-btn:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #start-btn {
+      width: auto;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 0.9rem;
+      z-index: 10;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    footer img {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(10px); }
+    }
+
+    .fade-out {
+      animation: fadeOut 0.3s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <img src="Bulk-logo.jpg" alt="Bulk Logo" class="logo" />
+  <h1>Bulk</h1>
+  <h2>One Exchange. Infinite Markets</h2>
+
+  <button id="start-btn">Start Quiz</button>
+
+  <div class="quiz-container" id="quiz-container">
+    <div id="question-container"></div>
+    <div class="choices" id="choices"></div>
+
+    <div class="controls">
+      <button id="prev-btn">Previous</button>
+      <button id="next-btn">Next</button>
+      <button id="restart-btn" style="display:none;">Restart</button>
+    </div>
+  </div>
+
+  <footer>
+    <span>Aadi.XYZ</span>
+    <a href="https://x.com/Abdulahad1473" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023.svg" alt="X Logo">
+    </a>
+  </footer>
+
+  <script>
+    const questions = [
+      { question: "1. What is the capital of France?", choices: ["A) Berlin", "B) Madrid", "C) Paris", "D) Rome"], correct: 2 },
+      { question: "2. Which planet is known as the Red Planet?", choices: ["A) Venus", "B) Mars", "C) Jupiter", "D) Saturn"], correct: 1 },
+      { question: "3. Who wrote '1984'?", choices: ["A) George Orwell", "B) J.K. Rowling", "C) Ernest Hemingway", "D) Mark Twain"], correct: 0 },
+      { question: "4. What is H2O commonly known as?", choices: ["A) Oxygen", "B) Hydrogen", "C) Water", "D) Salt"], correct: 2 },
+      { question: "5. Which continent is the Sahara Desert in?", choices: ["A) Africa", "B) Asia", "C) Australia", "D) South America"], correct: 0 },
+      { question: "6. What is 9 x 9?", choices: ["A) 72", "B) 81", "C) 99", "D) 90"], correct: 1 },
+      { question: "7. Which ocean is the largest?", choices: ["A) Atlantic", "B) Pacific", "C) Indian", "D) Arctic"], correct: 1 },
+      { question: "8. What gas do plants breathe in?", choices: ["A) Oxygen", "B) Nitrogen", "C) Carbon Dioxide", "D) Hydrogen"], correct: 2 },
+      { question: "9. Who painted the Mona Lisa?", choices: ["A) Van Gogh", "B) Picasso", "C) Leonardo da Vinci", "D) Michelangelo"], correct: 2 },
+      { question: "10. What is the freezing point of water?", choices: ["A) 0°C", "B) 100°C", "C) 50°C", "D) 32°C"], correct: 0 }
+    ];
+
+    const startBtn = document.getElementById("start-btn");
+    const quizContainer = document.getElementById("quiz-container");
+    const questionContainer = document.getElementById("question-container");
+    const choicesContainer = document.getElementById("choices");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const restartBtn = document.getElementById("restart-btn");
+
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+
+    // Fade out animation helper
+    function fadeOut(element, callback) {
+      element.classList.add('fade-out');
+      setTimeout(() => {
+        element.classList.remove('fade-out');
+        callback();
+      }, 300);
+    }
+
+    // Start quiz
+    startBtn.addEventListener("click", () => {
+      fadeOut(startBtn, () => {
+        startBtn.style.display = "none";
+        quizContainer.style.display = "block";
+        showQuestion(currentQuestionIndex);
+      });
+    });
+
+    // Next button
+    nextBtn.addEventListener("click", () => {
+      fadeOut(quizContainer, () => {
+        if (currentQuestionIndex < questions.length - 1) {
+          currentQuestionIndex++;
+          showQuestion(currentQuestionIndex);
+        } else {
+          showResults();
+        }
+      });
+    });
+
+    // Previous button
+    prevBtn.addEventListener("click", () => {
+      fadeOut(quizContainer, () => {
+        if (currentQuestionIndex > 0) {
+          currentQuestionIndex--;
+          showQuestion(currentQuestionIndex);
+        }
+      });
+    });
+
+    // Restart quiz
+    restartBtn.addEventListener("click", () => {
+      userAnswers = [];
+      currentQuestionIndex = 0;
+      restartBtn.style.display = "none";
+      nextBtn.style.display = "inline-block";
+      fadeOut(quizContainer, () => {
+        showQuestion(currentQuestionIndex);
+      });
+    });
+
+    // Show each question
+    function showQuestion(index) {
+      const q = questions[index];
+      questionContainer.innerHTML = `<div class="question">${q.question}</div>`;
+      choicesContainer.innerHTML = "";
+      q.choices.forEach((choice, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = choice;
+
+        // Highlight selected choice if already chosen
+        if (userAnswers[index] === i) {
+          btn.style.backgroundColor = "#fff";
+          btn.style.color = "#000";
+        }
+
+        btn.addEventListener("click", () => {
+          userAnswers[index] = i;
+          showQuestion(index); // re-render to highlight
+        });
+
+        choicesContainer.appendChild(btn);
+      });
+    }
+
+    // Show results and score
+    function showResults() {
+      let score = 0;
+      userAnswers.forEach((ans, idx) => {
+        if (ans === questions[idx].correct) score++;
+      });
+
+      questionContainer.innerHTML = `<h3>Quiz Completed!</h3><p>Your Score: ${score} / ${questions.length}</p>`;
+      choicesContainer.innerHTML = "";
+      nextBtn.style.display = "none";
+      restartBtn.style.display = "inline-block";
+    }
+  </script>
+</body>
+</html>
