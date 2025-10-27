@@ -10,21 +10,20 @@
 
   <style>
     /* ===== GLOBAL STYLES ===== */
-   body {
-  background: url('Bulk bg.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  font-family: 'Montserrat', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin: 0;
-  text-align: center;
-  backdrop-filter: brightness(0.4); /* optional dimming for readability */
-}
-
+    body {
+      background: url('Bulk bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      backdrop-filter: brightness(0.4);
+    }
 
     /* Optional dark overlay for readability */
     .overlay {
@@ -37,10 +36,12 @@
       z-index: -1;
     }
 
+    /* ✅ Smaller, centered logo */
     .logo {
-      width: 100px;
+      width: 70px;       /* smaller size */
       height: auto;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      display: block;
       animation: fadeIn 1.2s ease-in-out;
     }
 
@@ -164,7 +165,7 @@
 <body>
   <div class="overlay"></div>
 
-<img src="/logo.png" alt="Bulk Logo">
+  <img src="/logo.png" alt="Bulk Logo" class="logo">
   <h1>Bulk</h1>
   <h2>One Exchange. Infinite Markets</h2>
 
@@ -213,7 +214,6 @@
     let currentQuestionIndex = 0;
     let userAnswers = [];
 
-    // Fade out animation helper
     function fadeOut(element, callback) {
       element.classList.add('fade-out');
       setTimeout(() => {
@@ -222,7 +222,6 @@
       }, 300);
     }
 
-    // Start quiz
     startBtn.addEventListener("click", () => {
       fadeOut(startBtn, () => {
         startBtn.style.display = "none";
@@ -231,7 +230,6 @@
       });
     });
 
-    // Next button
     nextBtn.addEventListener("click", () => {
       fadeOut(quizContainer, () => {
         if (currentQuestionIndex < questions.length - 1) {
@@ -243,7 +241,6 @@
       });
     });
 
-    // Previous button
     prevBtn.addEventListener("click", () => {
       fadeOut(quizContainer, () => {
         if (currentQuestionIndex > 0) {
@@ -253,7 +250,6 @@
       });
     });
 
-    // Restart quiz
     restartBtn.addEventListener("click", () => {
       userAnswers = [];
       currentQuestionIndex = 0;
@@ -264,7 +260,6 @@
       });
     });
 
-    // Show each question
     function showQuestion(index) {
       const q = questions[index];
       questionContainer.innerHTML = `<div class="question">${q.question}</div>`;
@@ -272,34 +267,21 @@
       q.choices.forEach((choice, i) => {
         const btn = document.createElement("button");
         btn.textContent = choice;
-
-        // Highlight selected choice if already chosen
         if (userAnswers[index] === i) {
           btn.style.backgroundColor = "#fff";
           btn.style.color = "#000";
         }
-
         btn.addEventListener("click", () => {
           userAnswers[index] = i;
-          showQuestion(index); // re-render to highlight
+          showQuestion(index);
         });
-
         choicesContainer.appendChild(btn);
       });
     }
 
-    // Show results and score
     function showResults() {
       let score = 0;
       userAnswers.forEach((ans, idx) => {
         if (ans === questions[idx].correct) score++;
       });
-
       questionContainer.innerHTML = `<h3>Quiz Completed!</h3><p>Your Score: ${score} / ${questions.length}</p>`;
-      choicesContainer.innerHTML = "";
-      nextBtn.style.display = "none";
-      restartBtn.style.display = "inline-block";
-    }
-  </script>
-</body>
-</html>
