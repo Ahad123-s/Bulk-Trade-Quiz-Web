@@ -25,7 +25,6 @@
       backdrop-filter: brightness(1.5);
     }
 
-    /* Optional dark overlay for readability */
     .overlay {
       position: fixed;
       top: 0;
@@ -36,9 +35,8 @@
       z-index: -1;
     }
 
-    /* ✅ Smaller, centered logo */
     .logo {
-      width: 70px;       /* smaller size */
+      width: 70px;
       height: auto;
       margin-bottom: 15px;
       display: block;
@@ -62,7 +60,6 @@
       animation: fadeIn 1.8s ease-in-out;
     }
 
-    /* ===== QUIZ CONTAINER ===== */
     .quiz-container {
       border: 2px solid #fff;
       border-radius: 15px;
@@ -80,7 +77,6 @@
       margin-bottom: 20px;
     }
 
-    /* ===== BUTTON STYLES ===== */
     .choices button,
     .controls button,
     #start-btn {
@@ -122,7 +118,6 @@
       cursor: pointer;
     }
 
-    /* ===== FOOTER ===== */
     footer {
       position: fixed;
       bottom: 10px;
@@ -146,7 +141,6 @@
       vertical-align: middle;
     }
 
-    /* ===== ANIMATIONS ===== */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -191,19 +185,58 @@
   </a>
 </footer>
   
-
   <script>
     const questions = [
-      { question: "1. What is the capital of France?", choices: ["A) Berlin", "B) Madrid", "C) Paris", "D) Rome"], correct: 2 },
-      { question: "2. Which planet is known as the Red Planet?", choices: ["A) Venus", "B) Mars", "C) Jupiter", "D) Saturn"], correct: 1 },
-      { question: "3. Who wrote '1984'?", choices: ["A) George Orwell", "B) J.K. Rowling", "C) Ernest Hemingway", "D) Mark Twain"], correct: 0 },
-      { question: "4. What is H2O commonly known as?", choices: ["A) Oxygen", "B) Hydrogen", "C) Water", "D) Salt"], correct: 2 },
-      { question: "5. Which continent is the Sahara Desert in?", choices: ["A) Africa", "B) Asia", "C) Australia", "D) South America"], correct: 0 },
-      { question: "6. What is 9 x 9?", choices: ["A) 72", "B) 81", "C) 99", "D) 90"], correct: 1 },
-      { question: "7. Which ocean is the largest?", choices: ["A) Atlantic", "B) Pacific", "C) Indian", "D) Arctic"], correct: 1 },
-      { question: "8. What gas do plants breathe in?", choices: ["A) Oxygen", "B) Nitrogen", "C) Carbon Dioxide", "D) Hydrogen"], correct: 2 },
-      { question: "9. Who painted the Mona Lisa?", choices: ["A) Van Gogh", "B) Picasso", "C) Leonardo da Vinci", "D) Michelangelo"], correct: 2 },
-      { question: "10. What is the freezing point of water?", choices: ["A) 0°C", "B) 100°C", "C) 50°C", "D) 32°C"], correct: 0 }
+      {
+        question: "1. What latency target does BULK aim for in matching plus propagation?",
+        choices: ["A) 100–200 ms", "B) 50–100 ms", "C) 5–20 ms", "D) <1 ms"],
+        correct: 2
+      },
+      {
+        question: "2. Which of the following is NOT a design objective of BULK’s architecture?",
+        choices: ["A) Leaderless decentralization", "B) Gasless orders for users", "C) Use of centralized sequencers", "D) Verifiable and permissionless participation"],
+        correct: 2
+      },
+      {
+        question: "3. What matching discipline does BULK guarantee for order processing?",
+        choices: ["A) Lottery-based matching", "B) Price-time with random tie-break", "C) Deterministic FIFO", "D) Last-In, First-Out"],
+        correct: 2
+      },
+      {
+        question: "4. What underlying base layer does BULK leverage for decentralized asset custody and settlement?",
+        choices: ["A) Ethereum", "B) Polkadot", "C) Solana", "D) Binance Smart Chain"],
+        correct: 2
+      },
+      {
+        question: "5. What key risk category is eliminated by not using bridges and sequencers?",
+        choices: ["A) Network latency risk", "B) Smart contract complexity risk", "C) Security vulnerabilities & centralization risk", "D) Token-inflation risk"],
+        correct: 2
+      },
+      {
+        question: "6. BULK’s mission is to deliver an execution environment that is:",
+        choices: ["A) Slightly improved over existing decentralized venues", "B) Fundamentally superior to both centralized and decentralized venues", "C) Traditional centralized only", "D) Only for retail traders"],
+        correct: 1
+      },
+      {
+        question: "7. The user experience in BULK’s architecture is streamlined via:",
+        choices: ["A) Only direct smart-contract interaction", "B) Only proprietary UI", "C) Gasless orders and APIs / CCXT support", "D) Manual order entry only"],
+        correct: 2
+      },
+      {
+        question: "8. What does 'leaderless decentralization' mean in BULK?",
+        choices: ["A) Having no validators at all", "B) A system with no single point of failure or centralized sequencer", "C) A leaderless UI design", "D) A consensus where one leader controls matching"],
+        correct: 1
+      },
+      {
+        question: "9. Which of these best describes BULK’s high-performance order book goal?",
+        choices: ["A) Simple book for small trades", "B) Low throughput design", "C) Infrastructure for internet-scale capital markets", "D) Book relying only on off-chain settlement"],
+        correct: 2
+      },
+      {
+        question: "10. BULK asserts traders should no longer have to choose between:",
+        choices: ["A) Transparency and anonymity", "B) Security and decentralization", "C) Speed and security", "D) Liquidity and fragmentation"],
+        correct: 2
+      }
     ];
 
     const startBtn = document.getElementById("start-btn");
@@ -295,5 +328,6 @@
   </script>
 </body>
 </html>
+
 
 
